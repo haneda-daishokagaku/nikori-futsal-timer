@@ -396,7 +396,7 @@ export default function App(){
   const nums={1:useAudioPlayer(SOUND.n1,AUDIO_PLAYER_OPTIONS),2:useAudioPlayer(SOUND.n2,AUDIO_PLAYER_OPTIONS),3:useAudioPlayer(SOUND.n3,AUDIO_PLAYER_OPTIONS),4:useAudioPlayer(SOUND.n4,AUDIO_PLAYER_OPTIONS)};
   const previewPlayers=[shortWhistle,finishWhistle,startVoice,halfVoice,alertBeep,intervalAlert,thirtyAlert,timeup,countdown,...Object.values(nums)];
   useEffect(()=>{ void setIsAudioActiveAsync(true).catch(()=>{}); },[]);
-  const play=(p)=>{ if(!p) return; try{ p.pause(); void p.seekTo(0).catch(()=>{}); const result=p.play(); if(result?.catch) result.catch(e=>console.warn('🔊 play error:', e)); }catch(e){ console.warn('🔊 play error:', e); } };
+  const play=(p)=>{ if(!p) return; try{ void p.seekTo(0).catch(()=>{}); const result=p.play(); if(result?.catch) result.catch(e=>console.warn('🔊 play error:', e)); }catch(e){ console.warn('🔊 play error:', e); } };
   const stopPreviewPlayers=()=>{ if(testTimer.current){ clearTimeout(testTimer.current); testTimer.current=null; } previewPlayers.forEach((p)=>{ try{ p.pause(); }catch(e){} try{ void p.seekTo(0).catch(()=>{}); }catch(e){} }); setTestingSound(null); };
   const sndOf=(ev)=>(cur.sounds&&cur.sounds[ev])||'none';
   const evWhistle=(ev)=>{const m=sndOf(ev);return m==='whistle'||m==='both';};
